@@ -2,12 +2,13 @@ import { notFound } from 'next/navigation';
 import { PAGES } from '@/lib/pages';
 import { getSettings } from '@/lib/settings';
 import { pageGroupId } from '@/lib/settings-schema';
-import { tel } from '@/lib/site';
+import { SITE, tel } from '@/lib/site';
 export const dynamic = 'force-dynamic';
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
   const { slug } = await props.params;
   if (!PAGES[slug]) return {}; const p = (await getSettings())[pageGroupId(slug)];
-  return { title: p.seo_title || p.title, description: p.seo_description || undefined };
+  const title = p.seo_title || p.title, description = p.seo_description || undefined;
+  return { title, description, alternates: { canonical: `/info/${slug}` }, openGraph: { title, description, url: `${SITE.url}/info/${slug}` } };
 }
 export default async function Info(props: { params: Promise<{ slug: string }> }) {
   const { slug } = await props.params;

@@ -5,6 +5,7 @@ import type { PayStatus } from '@/lib/payment-config';
 import PaymentEditor from './PaymentEditor';
 
 const TABS = [['general', 'Brand & contact'], ['seo', 'SEO'], ['home', 'Homepage'], ['pages', 'Pages & policies'], ['shop', 'Shipping & orders'], ['email', 'Email'], ['pay', 'Payments']] as const;
+const SITE_URL = 'https://fitnexa.sujaljangra69.workers.dev';
 const toDisplay = (f: Field, v: any) => f.type === 'rupees' ? String((v ?? 0) / 100) : f.type === 'lines' ? (v ?? []).join('\n') : String(v ?? '');
 
 export default function SettingsEditor({ groups, values, pay }: { groups: Group[]; values: Record<string, any>; pay: PayStatus }) {
@@ -29,7 +30,14 @@ export default function SettingsEditor({ groups, values, pay }: { groups: Group[
         {f.type === 'textarea' || f.type === 'lines' ? <textarea rows={f.type === 'lines' ? 5 : 4} value={vals[g.id][f.key]} onChange={(e) => set(g.id, f.key, e.target.value)} />
           : <input type={f.type === 'number' || f.type === 'rupees' ? 'number' : f.type === 'email' ? 'email' : 'text'} min={0} step={f.type === 'rupees' ? '0.01' : undefined} value={vals[g.id][f.key]} onChange={(e) => set(g.id, f.key, e.target.value)} />}
         {f.help && <small style={{ color: '#777', fontWeight: 400 }}>{f.help}</small>}</label>)}</div>
-      {g.id === 'seo' && <div className="panel" style={{ background: '#fafafa' }}><small style={{ color: '#777' }}>Google preview</small><div style={{ color: '#1a0dab', fontSize: 18 }}>{vals.seo.title_default}</div><div style={{ color: '#006621', fontSize: 13 }}>yourdomain.com</div><div style={{ color: '#545454', fontSize: 13 }}>{vals.seo.description}</div></div>}
+      {g.id === 'seo' && <div className="panel" style={{ background: '#fafafa' }}><small style={{ color: '#777' }}>Google preview</small><div style={{ color: '#1a0dab', fontSize: 18 }}>{vals.seo.title_default}</div><div style={{ color: '#006621', fontSize: 13 }}>{SITE_URL.replace(/^https?:\/\//, '')}</div><div style={{ color: '#545454', fontSize: 13 }}>{vals.seo.description}</div>
+        <div className="seo-grid">
+          <div><b>Title length</b><br /><span className={vals.seo.title_default.length > 65 ? 'bad' : 'good'}>{vals.seo.title_default.length}/60 recommended</span></div>
+          <div><b>Description length</b><br /><span className={vals.seo.description.length > 165 || vals.seo.description.length < 110 ? 'bad' : 'good'}>{vals.seo.description.length}/120-160 recommended</span></div>
+          <div><b>Sitemap</b><br /><a href="/sitemap.xml" target="_blank">/sitemap.xml</a></div>
+          <div><b>Robots</b><br /><a href="/robots.txt" target="_blank">/robots.txt</a></div>
+        </div>
+        <ul className="seo-list"><li>Use Products → Edit for product-specific SEO titles and descriptions.</li><li>Use Pages & policies for page-specific SEO copy.</li><li>Submit the sitemap URL in Google Search Console after connecting the domain.</li><li>Use a 1200 x 630 image for the social share image when available.</li></ul></div>}
       <button className="p" onClick={() => save(g)}>Save {g.title.toLowerCase()}</button> {msg[g.id] && <span className={msg[g.id].ok ? 'good' : 'bad'}>{msg[g.id].t}</span>}</div>);
   const pg = groups.filter((g) => g.tab === 'pages');
   return (<>

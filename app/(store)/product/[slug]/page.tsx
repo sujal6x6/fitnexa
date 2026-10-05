@@ -13,7 +13,9 @@ type P = { params: Promise<{ slug: string }> };
 export async function generateMetadata(props: P): Promise<Metadata> {
   const p = await getProductBySlug((await props.params).slug); if (!p) return {};
   const title = p.seo_title || p.name, description = p.seo_description || p.short_description || `${p.name} by FITNEXA`;
-  return { title, description, alternates: { canonical: `/product/${p.slug}` }, openGraph: { title, description, images: p.images[0] ? [p.images[0].url] : undefined } };
+  const image = p.images[0] ? (p.images[0].url.startsWith('/') ? SITE.url + p.images[0].url : p.images[0].url) : undefined;
+  return { title, description, alternates: { canonical: `/product/${p.slug}` }, openGraph: { title, description, type: 'website', url: `${SITE.url}/product/${p.slug}`, images: image ? [{ url: image, alt: p.name }] : undefined },
+    twitter: { card: 'summary_large_image', title, description, images: image ? [image] : undefined } };
 }
 export default async function ProductPage(props: P) {
   const p = await getProductBySlug((await props.params).slug); if (!p) notFound();

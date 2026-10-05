@@ -2,9 +2,18 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import ProductCard from '@/components/ProductCard';
 import { getCategories, getProducts } from '@/lib/queries';
+import { SITE } from '@/lib/site';
 export const dynamic = 'force-dynamic';
-export const metadata: Metadata = { title: 'Shop home fitness equipment', description: 'Air bikes, orbit bikes, adjustable benches and multi home gyms by FITNEXA.' };
 type SP = { q?: string; category?: string; sort?: string; max?: string };
+export async function generateMetadata(props: { searchParams: Promise<SP> }): Promise<Metadata> {
+  const searchParams = await props.searchParams;
+  const cats = await getCategories();
+  const cat = cats.find((c) => c.slug === searchParams.category);
+  const title = cat ? `${cat.name} for Home Fitness` : searchParams.q ? `Search results for ${searchParams.q}` : 'Shop home fitness equipment';
+  const description = cat?.description ? `${cat.description} Shop FITNEXA ${cat.name.toLowerCase()} for home workouts with Pan-India delivery.` : 'Shop FITNEXA home fitness equipment including air bikes, orbit bikes, treadmills, adjustable benches and multi home gyms.';
+  const canonical = cat ? `/shop?category=${cat.slug}` : '/shop';
+  return { title, description, alternates: { canonical }, openGraph: { title, description, url: SITE.url + canonical } };
+}
 export default async function Shop(props: { searchParams: Promise<SP> }) {
   const searchParams = await props.searchParams;
   const [cats, products] = await Promise.all([getCategories(), getProducts({ q: searchParams.q?.slice(0, 60), category: searchParams.category, sort: searchParams.sort, max: Number(searchParams.max) || undefined })]);

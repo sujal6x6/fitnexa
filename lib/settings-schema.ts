@@ -20,7 +20,8 @@ export const GROUPS: Group[] = [
   { id: 'seo', tab: 'seo', title: 'Search engine & social sharing (SEO)', note: 'Each product also has its own SEO title/description in Products. Each page below has its own under Pages.', fields: [
     t('title_default', 'Default page title'), t('title_template', 'Title template', 'Use %s where the page title goes, e.g. %s | FITNEXA'), ta('description', 'Default meta description', 'Aim for 120–160 characters.'),
     t('keywords', 'Keywords', 'Comma separated (optional; search engines give this little weight).'), { key: 'og_image', label: 'Social share image URL', type: 'url', help: 'Shown when the site is shared on WhatsApp, Facebook, etc. Use a 1200×630 image.' },
-    t('google_verification', 'Google Search Console verification code', 'Only the code, not the full tag.'), t('twitter_handle', 'X / Twitter handle', 'e.g. @fitnexa')] },
+    t('google_verification', 'Google Search Console verification code', 'Only the code, not the full tag.'), t('twitter_handle', 'X / Twitter handle', 'e.g. @fitnexa'),
+    t('locality', 'Business locality / city'), t('region', 'Business state / region'), t('country', 'Business country code', 'Example: IN')] },
   { id: 'content', tab: 'home', title: 'Homepage content', fields: [
     t('hero_line1', 'Hero headline — line 1'), t('hero_line2', 'Hero headline — line 2 (shown in red)'), t('hero_line3', 'Hero headline — line 3'), ta('hero_text', 'Hero supporting text'),
     t('hero_cta', 'Primary button label'), t('hero_cta2', 'Secondary button label'),
@@ -38,7 +39,7 @@ export const DEFAULTS: Record<string, Record<string, any>> = {
   contact: { phone_order: '+91 63974 97386', phone_service: '+91 75994 44073', phone_help: '+91 78955 95323', email: '', whatsapp: '916397497386', hours: 'Monday – Saturday, 10:30 AM – 6:00 PM',
     address: 'Ground Floor, 257, MS Villa, Gali No. 1, Near Central Bank of India, Ashok Nagar, Yashoda Nagar, Etawah, Uttar Pradesh – 206001, India.', gstin: '09ACYPP8061A2Z4', instagram: 'https://www.instagram.com/kesari_fitzone/', facebook: '', youtube: '' },
   seo: { title_default: 'FITNEXA — Har Ghar Fitness', title_template: '%s | FITNEXA', description: 'Premium-quality home fitness equipment at reasonable prices. Air bikes, orbit bikes, adjustable benches and multi home gyms. Delivered across India.',
-    keywords: 'home gym, air bike, exercise bike, adjustable bench, fitness equipment India', og_image: '/brand/logo.webp', google_verification: '', twitter_handle: '' },
+    keywords: 'home gym, air bike, exercise bike, adjustable bench, treadmill, fitness equipment India', og_image: '/brand/logo.webp', google_verification: '', twitter_handle: '', locality: 'Etawah', region: 'Uttar Pradesh', country: 'IN' },
   content: { hero_line1: 'Fitness', hero_line2: 'for every', hero_line3: 'home.', hero_text: 'Premium fitness equipment designed for your home. Built for strength. Designed for everyday fitness.', hero_cta: 'SHOP EQUIPMENT', hero_cta2: 'EXPLORE FITNEXA',
     trust_items: ['Premium quality', 'Reasonable prices', 'Home fitness', 'Pan-India delivery', 'Customer support', 'After-sales service'],
     homegym_title: 'Your complete home gym', homegym_text: 'Bring a complete fitness setup into your home.', homegym_points: ['Multiple workouts, one machine', 'Made for domestic, everyday use', 'Free video-call installation help', 'Pan-India delivery'], cta_title: 'Ready to build your home gym?' },
