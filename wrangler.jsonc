@@ -6,7 +6,7 @@
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
   "d1_databases": [
-    { "binding": "DB", "database_name": "fitnexa", "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID", "migrations_dir": "migrations" }
+    { "binding": "DB", "database_name": "fitnexa", "database_id": "d1eba787-93b2-41b8-bd44-881cea444682", "migrations_dir": "migrations" }
   ],
   "vars": { "SITE_URL": "https://REPLACE-WITH-YOUR-DOMAIN" }
 }
