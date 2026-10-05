@@ -7,7 +7,7 @@ export default async function Footer() {
   const s = await getSettings(); const c = s.contact;
   return (<><footer><div className="wrap"><div className="fg">
     <div><Image src="/brand/logo.webp" alt={`${s.brand.name} logo`} width={140} height={100} style={{ background: '#fff', height: 'auto' }} /><p className="d" style={{ color: '#fff', fontSize: 26 }}>{s.brand.tagline}</p></div>
-    {col('Shop', [['Air Bikes', '/shop?category=air-bikes'], ['Orbit Bikes', '/shop?category=orbit-bikes'], ['Adjustable Benches', '/shop?category=adjustable-benches'], ['Multi Home Gym', '/shop?category=multi-home-gym']])}
+    {col('Shop', [['Treadmills', '/shop?category=treadmills'], ['Air Bikes', '/shop?category=air-bikes'], ['Orbit Bikes', '/shop?category=orbit-bikes'], ['Adjustable Benches', '/shop?category=adjustable-benches'], ['Multi Home Gym', '/shop?category=multi-home-gym']])}
     {col('Company', [['About', '/info/about'], ['Our Business Model', '/info/business-model'], ['Contact', '/info/contact']])}
     {col('Support', [['Warranty', '/info/warranty'], ['Installation & Service', '/info/installation'], ['Delivery', '/info/delivery'], ['Order Tracking', '/track']])}
     {col('Legal', [['Privacy Policy', '/info/privacy'], ['Terms', '/info/terms'], ['Shipping Policy', '/info/shipping'], ['Refund Policy', '/info/refund']])}

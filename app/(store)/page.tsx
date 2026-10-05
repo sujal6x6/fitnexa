@@ -41,20 +41,29 @@ export default async function Home() {
       <ul>{c.homegym_points.map((p: string) => <li key={p}>{p}</li>)}</ul>
       <div><Link className="btn" href="/shop?category=multi-home-gym">EXPLORE MULTI HOME GYM</Link></div></div></Reveal>
 
-    <section><div className="wrap"><h2 className="d">Why Fitnexa?</h2><div className="wy">{WHY.map(([t, d]) => <div key={t}><h3 className="d">{t}</h3><p>{d}</p></div>)}</div></div></section>
+    <section className="mobile-pages"><div className="wrap"><h2 className="d">Explore Fitnexa</h2><div className="quick-links">
+      {[
+        ['About', 'Who we are', '/info/about'],
+        ['Delivery', 'Pan-India shipping', '/info/delivery'],
+        ['Installation', 'Setup and service', '/info/installation'],
+        ['Warranty', 'After-sales support', '/info/warranty'],
+      ].map(([t, d, h]) => <Link key={t} href={h} className="ql"><b className="d">{t}</b><span>{d}</span></Link>)}
+    </div></div></section>
 
-    <section className="gray"><div className="wrap two"><div><h2 className="d">Fitness for every home.</h2>
+    <section className="mobile-long"><div className="wrap"><h2 className="d">Why Fitnexa?</h2><div className="wy">{WHY.map(([t, d]) => <div key={t}><h3 className="d">{t}</h3><p>{d}</p></div>)}</div></div></section>
+
+    <section className="gray mobile-long"><div className="wrap two"><div><h2 className="d">Fitness for every home.</h2>
       <p>Fitnexa is a fitness equipment brand dedicated to making fitness accessible and affordable for every household.</p>
       <p>We offer unique, premium-quality fitness products at reasonable and competitive prices, with a strong focus on products designed for domestic and home use.</p>
       <Link className="btn k" href="/info/about">OUR STORY</Link></div>
       <div><p style={{ marginBottom: 22 }}><b>FITNEXA is operated by KESARI TRADERS.</b> We import selected fitness equipment and work with trusted manufacturing partners to produce products to our specifications, then sell them under the FITNEXA brand.</p>
         <div className="proc">{['Select', 'Source', 'Quality', 'Fitnexa', 'Deliver', 'Support'].map((s) => <div key={s}><b className="d">{s}</b></div>)}</div></div></div></section>
 
-    <section style={{ background: 'var(--k)', color: '#fff' }}><div className="wrap"><h2 className="d">Fitness. Delivered across India.</h2>
+    <section className="mobile-long" style={{ background: 'var(--k)', color: '#fff' }}><div className="wrap"><h2 className="d">Fitness. Delivered across India.</h2>
       <p style={{ maxWidth: 560, color: '#ccc' }}>FITNEXA delivers fitness equipment across India from our warehouse in Etawah, Uttar Pradesh. Safe delivery through reliable logistics.</p>
       <p className="fine" style={{ color: '#999' }}>Availability and delivery charges may vary by product and location.</p><br /><Link className="btn" href="/info/contact">CONTACT SUPPORT</Link></div></section>
 
-    <section><div className="wrap"><h2 className="d">We don&apos;t stop at delivery.</h2><div className="cards" style={{ background: 'var(--g)', padding: 16 }}>
+    <section className="mobile-long"><div className="wrap"><h2 className="d">We don&apos;t stop at delivery.</h2><div className="cards" style={{ background: 'var(--g)', padding: 16 }}>
       <div className="cd"><h3 className="d">Free video-call installation help</h3><p>Available at no cost.</p></div>
       <div className="cd"><h3 className="d">Doorstep installation</h3><p>Available at extra charge, depending on location and product.</p></div>
       <div className="cd"><h3 className="d">Service support</h3><p>Call our service line for repairs and parts.</p></div></div>

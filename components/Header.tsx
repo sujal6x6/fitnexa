@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useCart } from './CartProvider';
-const LINKS: [string, string][] = [['Home', '/'], ['Shop', '/shop'], ['Categories', '/#cats'], ['About', '/info/about'], ['Support', '/info/contact']];
+const LINKS: [string, string][] = [['Home', '/'], ['Shop', '/shop'], ['Treadmills', '/shop?category=treadmills'], ['About', '/info/about'], ['Delivery', '/info/delivery'], ['Support', '/info/contact']];
 export default function Header() {
   const path = usePathname(); const { count } = useCart();
   const [scrolled, setScrolled] = useState(false); const [open, setOpen] = useState(false); const [bump, setBump] = useState(false);
