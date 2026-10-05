@@ -16,7 +16,7 @@ export default async function Home() {
   const c = S.content, ct = S.contact;
   return (<>
     <header className="hero" id="top"><div className="grid" /><div className="slash" />
-      <Image className="hp" src="/brand/hero.webp" alt="FITNEXA air bike" width={600} height={790} priority style={{ objectFit: 'cover' }} />
+      <Image className="hp" src="/brand/hero-cutout.png" alt="FITNEXA air bike" width={1088} height={1408} priority />
       <div className="wrap" style={{ position: 'relative', width: '100%' }}>
         <h1 className="d">{[c.hero_line1, c.hero_line2, c.hero_line3].map((l: string, i: number) => <span key={i}><b>{l}</b></span>)}</h1>
         <p>{c.hero_text}</p>
