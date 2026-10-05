@@ -1,0 +1,7 @@
+.dev.vars
+.env*
+node_modules
+.next
+.open-next
+.wrangler
+admin.sql

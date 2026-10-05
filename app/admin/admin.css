@@ -1,0 +1,24 @@
+.adm{font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f4f4f5;color:#111;min-height:100vh;display:flex}
+.adm *{box-sizing:border-box}
+.adm aside{width:220px;background:#0c0c0c;color:#ddd;padding:20px 0;position:sticky;top:0;height:100vh;flex:none}
+.adm aside .brand{padding:0 20px 18px;font-weight:800;font-style:italic;color:#fff;font-size:20px;letter-spacing:.02em}.adm aside .brand i{color:#d4101a}
+.adm aside a{display:block;padding:10px 20px;color:#ccc;text-decoration:none}.adm aside a:hover{background:#1c1c1c;color:#fff}
+.adm main{flex:1;padding:28px;min-width:0}.adm h1{font-size:22px;margin:0 0 18px}
+.a-link{background:none;border:0;color:#999;padding:10px 20px;cursor:pointer;font:inherit;text-align:left}
+.cards4{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:22px}
+.kpi{background:#fff;padding:16px;border:1px solid #e3e3e3}.kpi small{color:#666;display:block}.kpi b{font-size:24px}.kpi.warn b{color:#d4101a}
+.panel{background:#fff;border:1px solid #e3e3e3;padding:18px;margin-bottom:18px;overflow-x:auto}
+.panel h2{font-size:15px;margin:0 0 12px}
+table.t{width:100%;border-collapse:collapse}table.t th,table.t td{text-align:left;padding:9px 10px;border-bottom:1px solid #eee;vertical-align:top}table.t th{font-size:12px;color:#666;text-transform:uppercase}
+.bars{display:flex;align-items:flex-end;gap:6px;height:160px}.bars div{flex:1;background:#d4101a;min-height:2px;position:relative}.bars span{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-size:10px;color:#666}
+.adm input,.adm select,.adm textarea{font:inherit;padding:8px 10px;border:1px solid #ccc;background:#fff;width:100%;border-radius:0}
+.adm label{display:block;margin-bottom:12px;font-weight:600;font-size:13px}.adm label input,.adm label select,.adm label textarea{margin-top:4px;font-weight:400}
+.adm .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.adm .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.adm button.p,.adm a.p{background:#d4101a;color:#fff;border:0;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+.adm button.s{background:#fff;border:1px solid #bbb;padding:7px 12px;font:inherit;cursor:pointer}
+.adm .bad{color:#d4101a;font-weight:600}.adm .good{color:#116b2a;font-weight:600}
+.badge{display:inline-block;padding:2px 8px;background:#eee;font-size:12px}.badge.paid{background:#dff3e4}.badge.cancelled,.badge.refunded{background:#fde2e3}
+@media(max-width:800px){.adm{flex-direction:column}.adm aside{width:100%;height:auto;position:static;display:flex;flex-wrap:wrap;padding:8px}.adm aside .brand{padding:8px 12px}.adm main{padding:16px}.adm .g2,.adm .g3{grid-template-columns:1fr}}
+.alogin{min-height:100vh;display:grid;place-items:center;background:#0c0c0c;font:15px system-ui,sans-serif}.alogin form{background:#fff;padding:32px;width:min(380px,92vw)}
+.alogin h1{margin:0 0 16px;font-size:22px}.alogin label{display:block;margin-bottom:12px;font-weight:600;font-size:13px}.alogin input{width:100%;padding:10px;border:1px solid #bbb;margin-top:4px;font:inherit}
+.alogin button{background:#d4101a;color:#fff;border:0;padding:11px;width:100%;font:inherit;font-weight:600;cursor:pointer}

@@ -1,0 +1,19 @@
+# Local secrets for `npm run dev` / `npm run preview` (copy to .dev.vars — never commit it).
+# On Cloudflare, add the same names with `npx wrangler secret put NAME`.
+SITE_URL=http://localhost:3000
+AUTH_SECRET=
+SETTINGS_ENCRYPTION_KEY=
+# Optional: Razorpay fallback (normally add keys in Admin → Settings → Payments)
+RAZORPAY_KEY_ID=
+RAZORPAY_KEY_SECRET=
+RAZORPAY_WEBHOOK_SECRET=
+# Optional: Cloudinary image upload from the admin
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+# Optional: lower password-hash cost if Cloudflare's FREE plan (10 ms CPU limit) rejects logins. Default/max 100000. e.g. 10000
+# PBKDF2_ITERATIONS=
+# Used only by `npm run admin:sql` to create your admin login
+ADMIN_NAME=Owner
+ADMIN_EMAIL=
+ADMIN_PASSWORD=

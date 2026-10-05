@@ -1,0 +1,32 @@
+{
+  "name": "fitnexa",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "db:migrate:local": "wrangler d1 migrations apply fitnexa --local",
+    "db:migrate:remote": "wrangler d1 migrations apply fitnexa --remote",
+    "db:seed:local": "wrangler d1 execute fitnexa --local --file=db/seed.sql",
+    "db:seed:remote": "wrangler d1 execute fitnexa --remote --file=db/seed.sql",
+    "admin:sql": "node --env-file=.dev.vars scripts/create-admin.mjs"
+  },
+  "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.8",
+    "jose": "^5.9.3",
+    "next": "^15.5.27",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "typescript": "^5.5.4",
+    "wrangler": "^4.125.0"
+  }
+}
