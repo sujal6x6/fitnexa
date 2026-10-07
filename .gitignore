@@ -6,3 +6,4 @@ node_modules
 .wrangler
 admin.sql
 images-data/
+.codex-preview/
