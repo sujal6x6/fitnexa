@@ -19,7 +19,6 @@ export default async function Home() {
       <div className="hero-glow" aria-hidden="true" />
       <div className="wrap hero-poster">
         <div className="hero-copy">
-          <div className="hero-brand d">FIT<i>N</i>EXA<span>{S.brand.secondary_tagline}</span></div>
           <h1 className="d">{[c.hero_line1, c.hero_line2, c.hero_line3].map((l: string, i: number) => <span key={i}><b>{l}</b></span>)}</h1>
           <p>{c.hero_text}</p>
           <div className="row"><Link className="btn" href="/shop">{c.hero_cta}</Link><Link className="btn o" href="/info/about">{c.hero_cta2}</Link></div>

@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -13,7 +14,7 @@ export default function Header() {
   const solid = scrolled || path !== '/';
   return (<>
     <nav className={solid ? 's' : ''}><div className="wrap">
-      <Link className="lg d" href="/" aria-label="FITNEXA home">FIT<i>N</i>EXA</Link>
+      <Link className="lg logo-img" href="/" aria-label="FITNEXA home"><Image src="/brand/header-logo.png" alt="FITNEXA Step Into Strength" width={153} height={69} priority /></Link>
       <div className="links">{LINKS.map(([n, h]) => <Link key={n} href={h}>{n}</Link>)}</div>
       <div className="ic"><Link className="hide" href="/shop">Search</Link><Link className="hide" href="/account">My orders</Link>
         <Link href="/cart" className={'cb' + (bump ? ' bump' : '')} aria-label="Cart">Cart <b>{count}</b></Link>

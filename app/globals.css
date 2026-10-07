@@ -15,6 +15,7 @@ nav{position:fixed;inset:0 0 auto;z-index:50;height:68px;display:flex;align-item
 nav.s{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);color:var(--k);border-bottom:1px solid #ddd}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%}
 .lg{font-size:30px;display:flex;align-items:center;gap:8px}.lg i{color:var(--r);font-style:italic}
+.logo-img img{display:block;width:112px;height:auto}
 .links{display:flex;gap:34px;font-weight:600}.links a{position:relative;padding:4px 0}
 .links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--r);transition:.25s}.links a:hover::after{width:100%}
 .ic{display:flex;gap:18px;align-items:center;font-weight:600}
@@ -143,7 +144,7 @@ footer{background:#000;color:#bbb;padding:70px 0 90px;font-size:15px}
 @media(max-width:640px){
   body{font-size:14px;line-height:1.45}
   .wrap{padding:0 16px}
-  nav{height:60px}.lg{font-size:25px}nav .ic{position:absolute;right:16px;top:12px;gap:8px}.cb{padding:6px 10px;font-size:13px;min-width:62px;text-align:center}.bg{width:34px;height:34px}
+  nav{height:60px}.lg{font-size:25px}.logo-img img{width:96px}nav .ic{position:absolute;right:16px;top:12px;gap:8px}.cb{padding:6px 10px;font-size:13px;min-width:62px;text-align:center}.bg{width:34px;height:34px}
   .hero{min-height:760px;align-items:flex-end;padding:80px 0 0}
   .hero .grid{background-size:auto;background:repeating-linear-gradient(115deg,transparent 0 42px,rgba(255,255,255,.035) 42px 43px)}
   .slash{right:-30%;top:0;width:88%;height:78%;opacity:.85}.poster-hero .slash{right:-8%;top:-4%;width:54%;height:80%}
