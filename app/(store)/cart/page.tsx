@@ -27,7 +27,7 @@ export default function CartPage() {
     <aside className="sum" style={{ opacity: busy ? 0.6 : 1 }}><h2 className="d" style={{ fontSize: 34, marginBottom: 12 }}>Summary</h2>
       <div className="li"><span>Subtotal</span><span>{inr(q.subtotal)}</span></div>
       {q.discount > 0 && <div className="li"><span>Discount ({q.coupon})</span><span>−{inr(q.discount)}</span></div>}
-      <div className="li"><span>Delivery</span><span>{q.shipping ? inr(q.shipping) : 'Calculated at checkout'}</span></div>
+      <div className="li"><span>Delivery</span><span>{q.shipping ? inr(q.shipping) : 'Free Pan-India delivery'}</span></div>
       <div className="li tot"><b>Total</b><b>{inr(q.total)}</b></div>
       <div style={{ display: 'flex', gap: 8, margin: '16px 0 4px' }}><input placeholder="Coupon code" value={code} onChange={(e) => setCode(e.target.value)} aria-label="Coupon code" /><button className="btn k" onClick={() => setApplied(code)}>APPLY</button></div>
       {q.couponError && <p className="err">{q.couponError}</p>}

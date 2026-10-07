@@ -38,7 +38,7 @@ export default async function ProductPage(props: P) {
         {p.features.length > 0 && <><h2 className="d" style={{ fontSize: 30, margin: '18px 0 8px' }}>Features</h2><ul style={{ paddingLeft: 20 }}>{p.features.map((f) => <li key={f}>{f}</li>)}</ul></>}
         {specs.length > 0 && <><h2 className="d" style={{ fontSize: 30, margin: '18px 0 8px' }}>Specifications</h2><table className="spec"><tbody>{specs.map(([k, v]) => <tr key={k}><td>{k}</td><td>{v}</td></tr>)}</tbody></table></>}
         <h2 className="d" style={{ fontSize: 30, margin: '18px 0 8px' }}>Warranty</h2><p>{p.warranty || 'Warranty period and terms are provided with each product and vary by model.'}</p>
-        <h2 className="d" style={{ fontSize: 30, margin: '18px 0 8px' }}>Delivery</h2><p>Pan-India delivery from Etawah, Uttar Pradesh. Delivery charges and timelines may vary by location.</p>
+        <h2 className="d" style={{ fontSize: 30, margin: '18px 0 8px' }}>Delivery</h2><p><b>FREE Pan-India Delivery on every product.</b> Orders are dispatched after confirmation, subject to product availability. Delivery timelines may vary depending on the location and logistics partner.</p>
         <div className="help"><b>Need help?</b><br />Order support: <a href={tel(ct.phone_order)}>{ct.phone_order}</a><br />Service &amp; installation: <a href={tel(ct.phone_service)}>{ct.phone_service}</a></div>
       </div></div>
     {related.length > 0 && <><h2 className="d" style={{ fontSize: 48, margin: '70px 0 20px' }}>You may also like</h2><div className="pg">{related.map((r) => <ProductCard key={r.id} p={r} />)}</div></>}

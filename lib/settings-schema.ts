@@ -7,7 +7,7 @@ export type Group = { id: string; tab: 'general' | 'seo' | 'home' | 'pages' | 's
 const t = (key: string, label: string, help?: string): Field => ({ key, label, type: 'text', help });
 const ta = (key: string, label: string, help?: string): Field => ({ key, label, type: 'textarea', help, wide: true });
 
-const PAGE_LABELS: Record<string, string> = { about: 'About Fitnexa', 'business-model': 'Our Business Model', delivery: 'Pan-India Delivery', warranty: 'Warranty & After-Sales', installation: 'Installation & Service', contact: 'Contact (intro text)', privacy: 'Privacy Policy', terms: 'Terms & Conditions', shipping: 'Shipping Policy', refund: 'Refund / Cancellation Policy' };
+const PAGE_LABELS: Record<string, string> = { about: 'About Fitnexa', 'business-model': 'Our Business Model', delivery: 'Pan-India Delivery', warranty: 'Warranty & After-Sales', installation: 'Installation & Service', contact: 'Contact (intro text)', privacy: 'Privacy Policy', terms: 'Terms & Conditions', shipping: 'Shipping Policy', refund: 'Refund & Return Policy' };
 export const pageGroupId = (slug: string) => 'page_' + slug.replace(/-/g, '_');
 
 export const GROUPS: Group[] = [
@@ -41,7 +41,7 @@ export const DEFAULTS: Record<string, Record<string, any>> = {
   seo: { title_default: 'FITNEXA — Har Ghar Fitness', title_template: '%s | FITNEXA', description: 'Premium-quality home fitness equipment at reasonable prices. Air bikes, orbit bikes, adjustable benches and multi home gyms. Delivered across India.',
     keywords: 'home gym, air bike, exercise bike, adjustable bench, treadmill, fitness equipment India', og_image: '/brand/logo.webp', google_verification: '', twitter_handle: '', locality: 'Etawah', region: 'Uttar Pradesh', country: 'IN' },
   content: { hero_line1: 'Fitness', hero_line2: 'for every', hero_line3: 'home.', hero_text: 'Premium fitness equipment designed for your home. Built for strength. Designed for everyday fitness.', hero_cta: 'SHOP EQUIPMENT', hero_cta2: 'EXPLORE FITNEXA',
-    trust_items: ['Premium quality', 'Reasonable prices', 'Home fitness', 'Pan-India delivery', 'Customer support', 'After-sales service'],
+    trust_items: ['Premium quality', 'Reasonable prices', 'Home fitness', 'Free Pan-India delivery', 'Customer support', 'After-sales service'],
     homegym_title: 'Your complete home gym', homegym_text: 'Bring a complete fitness setup into your home.', homegym_points: ['Multiple workouts, one machine', 'Made for domestic, everyday use', 'Free video-call installation help', 'Pan-India delivery'], cta_title: 'Ready to build your home gym?' },
   shipping: { flat_paise: 0, free_above_paise: 0 },
   orders: { low_stock_threshold: 5 },

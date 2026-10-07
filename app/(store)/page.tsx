@@ -8,7 +8,7 @@ import { tel } from '@/lib/site';
 
 export const dynamic = 'force-dynamic'; // switch to `revalidate = 60` once Supabase env vars exist at build time
 
-const TRUST = ['Premium quality', 'Reasonable prices', 'Home fitness', 'Pan-India delivery', 'Customer support', 'After-sales service'];
+const TRUST = ['Premium quality', 'Reasonable prices', 'Home fitness', 'Free Pan-India delivery', 'Customer support', 'After-sales service'];
 const WHY: [string, string][] = [['Premium quality', 'Equipment selected and checked against our quality standards.'], ['Unique products', "A focused range you won't find on every other shelf."], ['Reasonable pricing', "Competitive prices, so fitness doesn't mean overspending."], ['Home fitness focus', 'Everything is designed for domestic and home use.'], ['Customer support', 'Real people on the phone, Monday to Saturday.'], ['Reliable service', 'Installation help and after-sales support when you need it.']];
 
 export default async function Home() {
@@ -31,10 +31,10 @@ export default async function Home() {
         <div className="hero-trust">
           {TRUST.slice(0, 5).map((item) => <span key={item}><b>{item.split(' ')[0]}</b>{item.replace(item.split(' ')[0], '')}</span>)}
         </div>
-        <div className="hero-dealer"><strong>Authorised dealer of</strong><b className="d">HERCULES FITNESS</b><b className="d">WELCARE FITNESS</b><span>KESARI TRADERS | Ashok Nagar, Etawah (U.P.)</span></div>
+        <div className="hero-dealer"><b className="d">FREE PAN-INDIA DELIVERY</b><strong>On every product</strong><span>KESARI TRADERS | Ashok Nagar, Etawah (U.P.)</span></div>
       </div></header>
 
-    <div className="mq d" aria-hidden="true"><div>{Array.from({ length: 4 }).flatMap((_, k) => c.trust_items.map((t: string) => <span key={k + t}>{t} <em>/</em></span>))}</div></div>
+    <div className="mq d" aria-hidden="true"><div>{Array.from({ length: 4 }).flatMap((_, k) => ['Free Pan-India delivery on every product', ...c.trust_items.filter((t: string) => !/pan-?india delivery/i.test(t))].map((t: string) => <span key={k + t}>{t} <em>/</em></span>))}</div></div>
 
     <section id="cats"><div className="wrap"><h2 className="d">Shop by category</h2><div className="cats">
       {cats.map((c, i) => (<Link key={c.id} className="cat" href={`/shop?category=${c.slug}`}>
@@ -71,8 +71,9 @@ export default async function Home() {
         <div className="proc">{['Select', 'Source', 'Quality', 'Fitnexa', 'Deliver', 'Support'].map((s) => <div key={s}><b className="d">{s}</b></div>)}</div></div></div></section>
 
     <section className="mobile-long" style={{ background: 'var(--k)', color: '#fff' }}><div className="wrap"><h2 className="d">Fitness. Delivered across India.</h2>
-      <p style={{ maxWidth: 560, color: '#ccc' }}>FITNEXA delivers fitness equipment across India from our warehouse in Etawah, Uttar Pradesh. Safe delivery through reliable logistics.</p>
-      <p className="fine" style={{ color: '#999' }}>Availability and delivery charges may vary by product and location.</p><br /><Link className="btn" href="/info/contact">CONTACT SUPPORT</Link></div></section>
+      <p style={{ maxWidth: 620, color: '#fff', fontWeight: 700 }}>FREE Pan-India Delivery on every product.</p>
+      <p style={{ maxWidth: 560, color: '#ccc' }}>FITNEXA dispatches confirmed orders across India from our warehouse in Etawah, Uttar Pradesh through reliable logistics partners.</p>
+      <p className="fine" style={{ color: '#999' }}>Delivery timelines may vary by product availability, location, and logistics partner.</p><br /><Link className="btn" href="/info/contact">CONTACT SUPPORT</Link></div></section>
 
     <section className="mobile-long"><div className="wrap"><h2 className="d">We don&apos;t stop at delivery.</h2><div className="cards" style={{ background: 'var(--g)', padding: 16 }}>
       <div className="cd"><h3 className="d">Free video-call installation help</h3><p>Available at no cost.</p></div>
