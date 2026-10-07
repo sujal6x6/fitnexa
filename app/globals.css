@@ -16,6 +16,9 @@ nav.s{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);color:var(--k)
 nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%}
 .lg{font-size:30px;display:flex;align-items:center;gap:8px}.lg i{color:var(--r);font-style:italic}
 .logo-img img{display:block;width:112px;height:auto}
+.logo-img .logo-dark{display:none}
+nav.s .logo-img .logo-light{display:none}
+nav.s .logo-img .logo-dark{display:block}
 .links{display:flex;gap:34px;font-weight:600}.links a{position:relative;padding:4px 0}
 .links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--r);transition:.25s}.links a:hover::after{width:100%}
 .ic{display:flex;gap:18px;align-items:center;font-weight:600}
