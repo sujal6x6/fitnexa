@@ -15,12 +15,27 @@ export default async function Home() {
   const [cats, products, S] = await Promise.all([getCategories(), getProducts({ featured: true }), getSettings()]);
   const c = S.content, ct = S.contact;
   return (<>
-    <header className="hero" id="top"><div className="grid" /><div className="slash" />
-      <Image className="hp" src="/brand/hero-cutout.png" alt="FITNEXA air bike" width={1088} height={1408} priority />
-      <div className="wrap" style={{ position: 'relative', width: '100%' }}>
-        <h1 className="d">{[c.hero_line1, c.hero_line2, c.hero_line3].map((l: string, i: number) => <span key={i}><b>{l}</b></span>)}</h1>
-        <p>{c.hero_text}</p>
-        <div className="row"><Link className="btn" href="/shop">{c.hero_cta}</Link><Link className="btn o" href="/info/about">{c.hero_cta2}</Link></div>
+    <header className="hero poster-hero" id="top"><div className="grid" /><div className="slash" />
+      <div className="hero-glow" aria-hidden="true" />
+      <div className="wrap hero-poster">
+        <div className="hero-copy">
+          <div className="hero-brand d">FIT<i>N</i>EXA<span>{S.brand.secondary_tagline}</span></div>
+          <h1 className="d">{[c.hero_line1, c.hero_line2, c.hero_line3].map((l: string, i: number) => <span key={i}><b>{l}</b></span>)}</h1>
+          <p>{c.hero_text}</p>
+          <div className="row"><Link className="btn" href="/shop">{c.hero_cta}</Link><Link className="btn o" href="/info/about">{c.hero_cta2}</Link></div>
+        </div>
+        <div className="hero-showroom" aria-hidden="true">
+          <p className="hero-script">Stronger<br />Healthier<br />Happier<br /><em>You</em></p>
+          <div className="brand-wall d">FIT<i>N</i>EXA</div>
+          <Image className="hero-product hero-bike" src="/brand/hero-cutout.png" alt="" width={1088} height={1408} priority />
+          <Image className="hero-product hero-gym" src="/products/hg-3003.webp" alt="" width={900} height={900} priority />
+          <Image className="hero-product hero-tread" src="/products/fn-001-manual-treadmill.jpeg" alt="" width={900} height={900} priority />
+          <Image className="hero-product hero-bench" src="/products/bench.webp" alt="" width={900} height={900} priority />
+        </div>
+        <div className="hero-trust">
+          {TRUST.slice(0, 5).map((item) => <span key={item}><b>{item.split(' ')[0]}</b>{item.replace(item.split(' ')[0], '')}</span>)}
+        </div>
+        <div className="hero-dealer"><strong>Authorised dealer of</strong><b className="d">HERCULES FITNESS</b><b className="d">WELCARE FITNESS</b><span>KESARI TRADERS | Ashok Nagar, Etawah (U.P.)</span></div>
       </div></header>
 
     <div className="mq d" aria-hidden="true"><div>{Array.from({ length: 4 }).flatMap((_, k) => c.trust_items.map((t: string) => <span key={k + t}>{t} <em>/</em></span>))}</div></div>
