@@ -138,11 +138,11 @@ footer{background:#000;color:#bbb;padding:70px 0 90px;font-size:15px}
 .wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;background:#fff;color:var(--k);padding:12px 18px;font-weight:600;box-shadow:inset 0 0 0 2px var(--k);transition:.2s}.wa:hover{background:var(--r);color:#fff;box-shadow:none}
 .toast{position:fixed;left:50%;bottom:80px;transform:translate(-50%,40px);background:var(--k);color:#fff;padding:12px 20px;z-index:100;opacity:0;transition:.3s;border-left:4px solid var(--r)}.toast.o{opacity:1;transform:translate(-50%,0)}
 @media(max-width:860px){.links,.ic .hide{display:none}.bg{display:block}.cats,.hg,.two{grid-template-columns:1fr}.cat:nth-child(1){grid-row:auto;min-height:340px}.fg{grid-template-columns:1fr 1fr}.fg>div:first-child{grid-column:1/-1}.slash{width:60%}
-  .hero-poster{grid-template-columns:1fr;min-height:auto;padding-bottom:174px;gap:0}
+  .hero-poster{grid-template-columns:1fr;min-height:auto;padding-bottom:196px;gap:0}
   .hero-copy{padding:0 0 18px}
   .hero-showroom{position:relative;right:auto;bottom:auto;width:100%;height:390px;margin-top:10px;grid-row:2}
-  .hero-trust{grid-template-columns:repeat(2,1fr);bottom:70px}.hero-trust span{padding:10px 12px;font-size:12px}.hero-trust span:nth-child(n+5){display:none}
-  .hero-dealer{grid-template-columns:1fr;gap:6px;min-height:70px;padding:12px 16px}.hero-dealer span{text-align:left}.hero-dealer strong{display:block;font-size:13px}.hero-dealer b{font-size:22px}
+  .hero-trust{grid-template-columns:repeat(2,1fr);bottom:96px}.hero-trust span{padding:10px 12px;font-size:12px}.hero-trust span:nth-child(n+5){display:none}
+  .hero-dealer{grid-template-columns:1fr;align-content:center;gap:5px;min-height:96px;padding:13px 160px 13px 16px}.hero-dealer span{text-align:left}.hero-dealer strong{display:block;font-size:13px;line-height:1.1}.hero-dealer b{font-size:22px;line-height:.95}.hero-dealer span{font-size:13px;line-height:1.2}
 }
 @media(max-width:640px){
   body{font-size:14px;line-height:1.45}
@@ -152,7 +152,7 @@ footer{background:#000;color:#bbb;padding:70px 0 90px;font-size:15px}
   .hero .grid{background-size:auto;background:repeating-linear-gradient(115deg,transparent 0 42px,rgba(255,255,255,.035) 42px 43px)}
   .slash{right:-30%;top:0;width:88%;height:78%;opacity:.85}.poster-hero .slash{right:-8%;top:-4%;width:54%;height:80%}
   .hp{right:-10px;bottom:340px;width:min(56vw,220px);height:255px;opacity:.92}
-  .hero-poster{padding-bottom:150px}
+  .hero-poster{padding-bottom:178px}
   .hero-brand{font-size:38px;margin-bottom:18px}.hero-brand span{font-size:10px;letter-spacing:.32em;margin-top:7px}
   .hero h1{font-size:clamp(48px,15vw,64px);max-width:95%;text-wrap:balance}
   .hero p{max-width:310px;margin:16px 0 18px;font-size:14px;color:#eee}
@@ -161,8 +161,8 @@ footer{background:#000;color:#bbb;padding:70px 0 90px;font-size:15px}
   .hero-showroom::after{left:2%;right:2%;height:32%}
   .brand-wall{right:7%;top:34%;font-size:30px;padding:8px 14px}.brand-wall span{font-size:7px;letter-spacing:.28em}.hero-script{right:8%;top:7%;font-size:25px}
   .hero-equipment{left:-12%;bottom:0;width:124%;height:62%}
-  .hero-trust{left:0;right:0;bottom:62px}.hero-trust span{gap:5px;padding:8px 9px;font-size:10px}.hero-trust span::before{width:25px;height:25px;flex-basis:25px}
-  .hero-dealer{left:0;right:0;bottom:0;grid-template-columns:1fr;padding:10px 16px}.hero-dealer b{font-size:18px}.hero-dealer span{font-size:12px}.hero-dealer strong{font-size:12px}
+  .hero-trust{left:0;right:0;bottom:92px}.hero-trust span{gap:5px;padding:8px 9px;font-size:10px}.hero-trust span::before{width:25px;height:25px;flex-basis:25px}
+  .hero-dealer{left:0;right:0;bottom:0;grid-template-columns:1fr;min-height:92px;padding:12px 150px 12px 16px}.hero-dealer b{font-size:18px;line-height:.95}.hero-dealer span{font-size:11px;line-height:1.2}.hero-dealer strong{font-size:12px;line-height:1.1}
   .hero .row{gap:10px}.btn{padding:12px 17px;font-size:13px;letter-spacing:.02em}
   .mq{padding:10px 0}.mq div{font-size:18px}.mq span{margin:0 16px}
   section{padding:54px 0}h2{font-size:clamp(34px,12vw,48px);margin-bottom:24px}
@@ -178,7 +178,7 @@ footer{background:#000;color:#bbb;padding:70px 0 90px;font-size:15px}
   .wa{right:12px;padding:10px 13px;font-size:13px}
 }
 @media(max-width:380px){
-  .hero{min-height:720px}.hero h1{font-size:46px}.hp{width:205px;height:240px;bottom:340px}.hero-showroom{height:300px}.hero-equipment{width:130%;left:-15%}.hero-dealer b{font-size:16px}
+  .hero{min-height:760px}.hero h1{font-size:46px}.hp{width:205px;height:240px;bottom:340px}.hero-showroom{height:300px}.hero-equipment{width:130%;left:-15%}.hero-dealer{padding-right:126px}.hero-dealer b{font-size:16px}
   .btn{padding:11px 14px;font-size:12px}.pg{grid-template-columns:1fr 1fr}
   .pb h3{font-size:13px}.pr{font-size:15px}.cat h3{font-size:28px}.mm a{font-size:36px}
 }
