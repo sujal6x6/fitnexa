@@ -12,9 +12,17 @@ async function hydrate(rows: any[]): Promise<Product[]> {
   if (!rows.length) return [];
   const ids = rows.map((r) => r.id);
   const imgs = await all<any>(`SELECT product_id, url, alt, position FROM product_images WHERE product_id IN (${inList(ids.length)}) ORDER BY position`, ...ids);
-  return rows.map(({ cat_name, cat_slug, ...r }) => ({ ...r, features: parseJson(r.features, []), specifications: parseJson(r.specifications, {}),
-    is_featured: !!r.is_featured, is_active: !!r.is_active, category: cat_name ? { name: cat_name, slug: cat_slug } : null,
-    images: imgs.filter((i) => i.product_id === r.id).map(({ url, alt, position }) => ({ url, alt, position })) }));
+  return rows.map(({ cat_name, cat_slug, ...r }) => {
+    const images = imgs.filter((i) => i.product_id === r.id).map(({ url, alt, position }) => ({ url, alt, position }));
+    if (cat_slug === 'treadmills') {
+      const cover = { url: '/products/treadmill-front-fitnexa.png', alt: 'FITNEXA treadmill cover image', position: 0 };
+      if (images.length) images[0] = cover;
+      else images.push(cover);
+    }
+    return { ...r, features: parseJson(r.features, []), specifications: parseJson(r.specifications, {}),
+      is_featured: !!r.is_featured, is_active: !!r.is_active, category: cat_name ? { name: cat_name, slug: cat_slug } : null,
+      images };
+  });
 }
 export const getCategories = (): Promise<Category[]> => all('SELECT id, name, slug, description, image_url FROM categories WHERE is_active = 1 ORDER BY position');
 
