@@ -41,7 +41,7 @@ export default function SettingsEditor({ groups, values, pay }: { groups: Group[
       <button className="p" onClick={() => save(g)}>Save {g.title.toLowerCase()}</button> {msg[g.id] && <span className={msg[g.id].ok ? 'good' : 'bad'}>{msg[g.id].t}</span>}</div>);
   const pg = groups.filter((g) => g.tab === 'pages');
   return (<>
-    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 16 }}>{TABS.map(([id, l]) => <button key={id} className={tab === id ? 'p' : 's'} onClick={() => setTab(id)}>{l}</button>)}</div>
+    <div className="admin-tabs">{TABS.map(([id, l]) => <button key={id} className={tab === id ? 'p' : 's'} onClick={() => setTab(id)}>{l}</button>)}</div>
     {tab === 'pages' ? <><label style={{ maxWidth: 360 }}>Page to edit<select value={page} onChange={(e) => setPage(e.target.value)}>{pg.map((g) => <option key={g.id} value={g.id}>{g.title}</option>)}</select></label>{panel(pg.find((g) => g.id === page)!)}</>
       : tab === 'pay' ? <PaymentEditor status={pay} />
       : groups.filter((g) => g.tab === tab).map(panel)}</>);

@@ -20,7 +20,7 @@ export default async function Products(props: { searchParams: Promise<{ q?: stri
     all<any>("SELECT COUNT(*) AS total, SUM(is_active = 1) AS active, SUM(is_active = 0) AS hidden, SUM(stock <= 5) AS low_stock FROM products"),
   ]);
   const c = counts[0] ?? {};
-  return (<><div style={{ display: 'flex', justifyContent: 'space-between' }}><h1>Products</h1><Link className="p" href="/admin/products/new" style={{ height: 36 }}>+ New product</Link></div>
+  return (<><div className="admin-topbar"><h1>Products</h1><Link className="p" href="/admin/products/new">+ New product</Link></div>
     <div className="cards4"><div className="kpi"><small>Total products</small><b>{c.total ?? 0}</b></div><div className="kpi"><small>Active</small><b>{c.active ?? 0}</b></div><div className="kpi"><small>Hidden drafts</small><b>{c.hidden ?? 0}</b></div><div className="kpi warn"><small>Low stock</small><b>{c.low_stock ?? 0}</b></div></div>
     <form className="panel g3" style={{ display: 'grid', alignItems: 'end' }}><label>Search<input name="q" defaultValue={searchParams.q} placeholder="Product name or SKU" /></label>
       <label>Category<select name="category" defaultValue={searchParams.category ?? ''}><option value="">All categories</option>{cats.map((x) => <option key={x.slug} value={x.slug}>{x.name}</option>)}</select></label>
