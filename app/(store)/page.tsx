@@ -31,11 +31,31 @@ export default async function Home() {
 
     <div className="mq d" aria-hidden="true"><div>{Array.from({ length: 4 }).flatMap((_, k) => ['Free Pan-India delivery on every product', ...c.trust_items.filter((t: string) => !/pan-?india delivery/i.test(t))].map((t: string) => <span key={k + t}>{t} <em>/</em></span>))}</div></div>
 
+    <section className="tm-front" id="treadmills">
+      <div className="wrap tm-wrap">
+        <div className="tm-media">
+          <Image src="/products/treadmill-front-fitnexa.png" alt="FITNEXA treadmill for home workouts" fill sizes="(max-width: 760px) 100vw, 48vw" priority={false} />
+        </div>
+        <div className="tm-copy">
+          <span className="eyebrow">Home cardio</span>
+          <h2 className="d">Treadmills for every home.</h2>
+          <p>Compact FITNEXA treadmill options for daily walking, cardio and home training with FREE Pan-India Delivery on every product.</p>
+          <div className="tm-points">
+            {['Manual cardio training', 'Space-saving setup', 'Free Pan-India Delivery'].map((point) => <b key={point}>{point}</b>)}
+          </div>
+          <Link className="btn" href="/shop?category=treadmills">SHOP TREADMILLS</Link>
+        </div>
+      </div>
+    </section>
+
     <section id="cats"><div className="wrap"><h2 className="d">Shop by category</h2><div className="cats">
-      {cats.map((c, i) => (<Link key={c.id} className="cat" href={`/shop?category=${c.slug}`}>
-        <span className="big d">{c.name.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
-        {c.image_url && <Image className="cim" src={c.image_url} alt="" width={420} height={560} sizes="40vw" />}
-        <h3 className="d">{c.name}</h3><p>{c.description}</p><span className="ar">Explore →</span></Link>))}
+      {cats.map((c) => {
+        const imageUrl = c.slug === 'treadmills' ? '/products/treadmill-front-fitnexa.png' : c.image_url;
+        return (<Link key={c.id} className="cat" href={`/shop?category=${c.slug}`}>
+          <span className="big d">{c.name.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
+          {imageUrl && <Image className="cim" src={imageUrl} alt="" width={420} height={560} sizes="40vw" />}
+          <h3 className="d">{c.name}</h3><p>{c.description}</p><span className="ar">Explore →</span></Link>);
+      })}
     </div></div></section>
 
     <section className="gray" id="featured"><div className="wrap"><h2 className="d">Featured equipment</h2>
