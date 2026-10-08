@@ -6,6 +6,10 @@ import { inr } from '@/lib/format';
 export default function ProductBuy({ id, price, stock }: { id: string; price: number; stock: number }) {
   const { add } = useCart(); const router = useRouter(); const [q, setQ] = useState(1); const [done, setDone] = useState(false);
   if (stock < 1) return <p className="stock out">Currently out of stock. Call us to be notified.</p>;
+  if (price < 1) return <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap', margin: '18px 0' }}>
+    <a className="btn" href="/info/contact">ENQUIRE NOW</a>
+    <a className="btn k" href="tel:+916397497386">CALL FOR PRICE</a>
+  </div>;
   const addNow = () => { add(id, q); setDone(true); setTimeout(() => setDone(false), 1400); };
   const buy = () => { add(id, q); router.push('/checkout'); };
   return (<>

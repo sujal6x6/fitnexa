@@ -30,7 +30,7 @@ export default async function ProductPage(props: P) {
     <nav aria-label="Breadcrumb" style={{ position: 'static', height: 'auto', color: 'var(--g2)', marginBottom: 18, fontSize: 14 }}><Link href="/">Home</Link> / <Link href="/shop">Shop</Link>{p.category && <> / <Link href={`/shop?category=${p.category.slug}`}>{p.category.name}</Link></>}</nav>
     <div className="pd"><Gallery images={p.images} name={p.name} />
       <div><h1 className="d" style={{ fontSize: 'clamp(40px,5vw,68px)', marginBottom: 10 }}>{p.name}</h1>
-        <div><span className="price">{inr(p.price_paise)}</span>{p.compare_price_paise && p.compare_price_paise > p.price_paise && <span className="cmp">{inr(p.compare_price_paise)}</span>}</div>
+        <div><span className="price">{p.price_paise > 0 ? inr(p.price_paise) : 'Contact for price'}</span>{p.compare_price_paise && p.compare_price_paise > p.price_paise && <span className="cmp">{inr(p.compare_price_paise)}</span>}</div>
         <p style={{ margin: '8px 0' }}><span className={'stock ' + (p.stock > 0 ? 'in' : 'out')}>{p.stock > 0 ? (p.stock <= 5 ? `Only ${p.stock} left` : 'In stock') : 'Out of stock'}</span> · SKU {p.sku}</p>
         {p.short_description && <p>{p.short_description}</p>}
         <ProductBuy id={p.id} price={p.price_paise} stock={p.stock} />

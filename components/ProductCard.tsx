@@ -16,8 +16,8 @@ export default function ProductCard({ p }: { p: Product }) {
         {img ? <Image src={img.url} alt={img.alt ?? p.name} fill sizes="(max-width:560px) 50vw, 25vw" style={{ objectFit: fit, objectPosition: 'center' }} /> : <b className="d">{p.sku.split('-')[1] ?? p.sku}</b>}
       </Link>
       <div className="pb"><small>{p.category?.name}</small><h3><Link href={`/product/${p.slug}`}>{p.name}</Link></h3>
-        <div className="pr">{inr(p.price_paise)}{off > 0 && <s style={{ color: '#888', fontSize: 14, marginLeft: 8 }}>{inr(p.compare_price_paise!)}</s>}</div>
-        {p.stock > 0 ? <button className="add" onClick={() => { add(p.id); setDone(true); setTimeout(() => setDone(false), 1400); }}>{done ? 'Added ✓' : 'Add to cart'}</button> : <div className="nostock">Out of stock</div>}
+        <div className="pr">{p.price_paise > 0 ? inr(p.price_paise) : 'Contact for price'}{off > 0 && <s style={{ color: '#888', fontSize: 14, marginLeft: 8 }}>{inr(p.compare_price_paise!)}</s>}</div>
+        {p.price_paise < 1 ? <Link className="add" href="/info/contact">Enquire now</Link> : p.stock > 0 ? <button className="add" onClick={() => { add(p.id); setDone(true); setTimeout(() => setDone(false), 1400); }}>{done ? 'Added ✓' : 'Add to cart'}</button> : <div className="nostock">Out of stock</div>}
       </div>
     </article>
   );
