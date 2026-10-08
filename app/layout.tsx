@@ -4,14 +4,16 @@ import { SITE } from '@/lib/site';
 import { getSettings } from '@/lib/settings';
 
 export const dynamic = 'force-dynamic'; // settings come from D1 on every request, so admin edits show immediately
+const GOOGLE_SITE_VERIFICATION = 'ouSZTUH5me9AJ_XFIkLoD9UbtdDvEOlIbU3DYwIlgCE';
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSettings(); const o = s.seo;
   const image = o.og_image ? (String(o.og_image).startsWith('/') ? SITE.url + o.og_image : o.og_image) : undefined;
   return { metadataBase: new URL(SITE.url), title: { default: o.title_default, template: o.title_template }, description: o.description, keywords: o.keywords || undefined,
-    alternates: { canonical: '/' }, robots: { index: true, follow: true },
+    alternates: { canonical: '/' }, robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
+    manifest: '/manifest.webmanifest',
     openGraph: { siteName: s.brand.name, type: 'website', locale: 'en_IN', url: SITE.url, title: o.title_default, description: o.description, images: image ? [{ url: image }] : undefined },
     twitter: { card: 'summary_large_image', site: o.twitter_handle || undefined, title: o.title_default, description: o.description, images: image ? [image] : undefined },
-    verification: o.google_verification ? { google: o.google_verification } : undefined };
+    verification: { google: o.google_verification || GOOGLE_SITE_VERIFICATION } };
 }
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const s = await getSettings(); const c = s.contact;

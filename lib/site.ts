@@ -1,3 +1,6 @@
+const configuredUrl = process.env.SITE_URL;
+export const CANONICAL_URL = configuredUrl && !configuredUrl.includes('workers.dev') ? configuredUrl : 'https://fitnexafitness.com';
+
 // Phase 3 moves these into the admin-editable site_settings table.
 export const SITE = {
   name: 'FITNEXA', tagline: 'Har Ghar Fitness', firm: 'KESARI TRADERS',
@@ -5,6 +8,6 @@ export const SITE = {
   hours: 'Monday – Saturday, 10:30 AM – 6:00 PM',
   address: 'Ground Floor, 257, MS Villa, Gali No. 1, Near Central Bank of India, Ashok Nagar, Yashoda Nagar, Etawah, Uttar Pradesh – 206001, India.',
   gstin: '09ACYPP8061A2Z4', instagram: 'https://www.instagram.com/kesari_fitzone/',
-  url: process.env.SITE_URL || 'http://localhost:3000',
+  url: CANONICAL_URL,
 };
 export const tel = (p: string) => 'tel:' + p.replace(/\s/g, '');
