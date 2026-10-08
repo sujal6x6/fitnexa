@@ -23,11 +23,6 @@ export default async function Home() {
           <p>{c.hero_text}</p>
           <div className="row"><Link className="btn" href="/shop">{c.hero_cta}</Link><Link className="btn o" href="/info/about">{c.hero_cta2}</Link></div>
         </div>
-        <div className="hero-showroom">
-          <p className="hero-script">Stronger<br />Healthier<br />Happier<br /><em>You</em></p>
-          <div className="brand-wall d">FIT<i>N</i>EXA<span>{S.brand.secondary_tagline}</span></div>
-          <Image className="hero-equipment" src="/brand/hero-equipment-collage.png" alt="FITNEXA premium home fitness equipment" width={1536} height={1024} priority />
-        </div>
         <div className="hero-trust">
           {TRUST.slice(0, 5).map((item) => <span key={item}><b>{item.split(' ')[0]}</b>{item.replace(item.split(' ')[0], '')}</span>)}
         </div>
