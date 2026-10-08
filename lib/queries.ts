@@ -7,7 +7,7 @@ export type Product = {
 };
 export type Category = { id: string; name: string; slug: string; description: string | null; image_url: string | null };
 const BASE = 'SELECT p.*, c.name AS cat_name, c.slug AS cat_slug FROM products p LEFT JOIN categories c ON c.id = p.category_id';
-const TREADMILL_COVER = '/products/treadmill-front-fitnexa.png';
+const TREADMILL_COVER = '/products/treadmill-category-cover.png';
 
 async function ensureTreadmillProducts() {
   await batch([
