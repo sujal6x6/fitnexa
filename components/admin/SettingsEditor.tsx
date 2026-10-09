@@ -12,6 +12,7 @@ type Cat = { id: string; name: string; slug: string; description: string | null;
 
 export default function SettingsEditor({ groups, values, pay, categories }: { groups: Group[]; values: Record<string, any>; pay: PayStatus; categories: Cat[] }) {
   const [tab, setTab] = useState<string>('general');
+  const [menuOpen, setMenuOpen] = useState(false);
   const [page, setPage] = useState(groups.find((g) => g.tab === 'pages')!.id);
   const [vals, setVals] = useState<Record<string, Record<string, string>>>(() => Object.fromEntries(groups.map((g) => [g.id, Object.fromEntries(g.fields.map((f) => [f.key, toDisplay(f, values[g.id]?.[f.key])]))])));
   const [msg, setMsg] = useState<Record<string, { ok: boolean; t: string }>>({});
@@ -93,8 +94,23 @@ export default function SettingsEditor({ groups, values, pay, categories }: { gr
       </div>}
       <button className="p" onClick={() => save(g)}>Save {g.title.toLowerCase()}</button> {msg[g.id] && <span className={msg[g.id].ok ? 'good' : 'bad'}>{msg[g.id].t}</span>}</div>);
   const pg = groups.filter((g) => g.tab === 'pages');
+  const activeTab = TABS.find(([id]) => id === tab)?.[1] ?? 'Settings';
+  const chooseTab = (id: string) => { setTab(id); setMenuOpen(false); };
   return (<>
-    <div className="settings-menu"><span>Settings menu</span><div className="admin-tabs">{TABS.map(([id, l]) => <button key={id} className={tab === id ? 'p' : 's'} onClick={() => setTab(id)}>{l}</button>)}</div></div>
+    <div className="settings-toolbar">
+      <div>
+        <span className="eyebrow">Settings</span>
+        <p>Choose a section, update it, and save. Changes go live immediately.</p>
+      </div>
+      <div className="settings-menu">
+        <button type="button" className="settings-menu-trigger" onClick={() => setMenuOpen((v) => !v)} aria-expanded={menuOpen}>
+          <span>{activeTab}</span><b>Menu</b>
+        </button>
+        {menuOpen && <div className="settings-menu-popover">
+          {TABS.map(([id, l]) => <button key={id} className={tab === id ? 'active' : ''} onClick={() => chooseTab(id)}>{l}</button>)}
+        </div>}
+      </div>
+    </div>
     {tab === 'pages' ? <><label style={{ maxWidth: 360 }}>Page to edit<select value={page} onChange={(e) => setPage(e.target.value)}>{pg.map((g) => <option key={g.id} value={g.id}>{g.title}</option>)}</select></label>{panel(pg.find((g) => g.id === page)!)}</>
       : tab === 'pay' ? <PaymentEditor status={pay} />
       : tab === 'categories' ? <CategoryEditor categories={categories} />
