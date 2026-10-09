@@ -72,6 +72,33 @@ export default function CategoryEditor({ categories }: { categories: Cat[] }) {
       setUploading((m) => ({ ...m, [id]: (e as Error).message }));
     }
   }
+  async function uploadDraft(file: File) {
+    setAdding('Preparing image...');
+    try {
+      const sigRes = await fetch('/api/admin/upload-signature');
+      const sg = await readJson(sigRes);
+      if (!sigRes.ok || sg.error) {
+        const fallback = await fileToDataUrl(file);
+        setDraft((d) => ({ ...d, image_url: fallback }));
+        setAdding('Image ready. Add the category.');
+        return;
+      }
+      const fd = new FormData();
+      fd.append('file', file); fd.append('api_key', sg.apiKey); fd.append('timestamp', sg.timestamp); fd.append('folder', sg.folder); fd.append('signature', sg.signature);
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${sg.cloudName}/image/upload`, { method: 'POST', body: fd });
+      const res = await readJson(uploadRes);
+      if (!res.secure_url) {
+        const fallback = await fileToDataUrl(file);
+        setDraft((d) => ({ ...d, image_url: fallback }));
+        setAdding('Image ready. Add the category.');
+        return;
+      }
+      setDraft((d) => ({ ...d, image_url: res.secure_url }));
+      setAdding('Image uploaded. Add the category.');
+    } catch (e) {
+      setAdding((e as Error).message);
+    }
+  }
 
   async function save(c: (typeof items)[number]) {
     setMsg((m) => ({ ...m, [c.id]: 'Saving...' }));
@@ -116,8 +143,18 @@ export default function CategoryEditor({ categories }: { categories: Cat[] }) {
       <h2>Add category</h2>
       <div className="g2"><label>Name<input value={draft.name} onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value, slug: d.slug || slugify(e.target.value) }))} /></label><label>Slug<input value={draft.slug} onChange={(e) => setDraft((d) => ({ ...d, slug: slugify(e.target.value) }))} /></label></div>
       <label>Description<input value={draft.description} onChange={(e) => setDraft((d) => ({ ...d, description: e.target.value }))} /></label>
-      <div className="g2"><label>Cover image URL<input value={draft.image_url} onChange={(e) => setDraft((d) => ({ ...d, image_url: e.target.value }))} placeholder="/products/example.webp or https://..." /></label><label>Position<input type="number" min={0} value={draft.position} onChange={(e) => setDraft((d) => ({ ...d, position: Number(e.target.value) }))} /></label></div>
-      <button type="button" className="p" onClick={addCategory} disabled={draft.name.trim().length < 2}>Add category</button> {adding && <span className={adding.includes('added') ? 'good' : adding.includes('Adding') ? '' : 'bad'}>{adding}</span>}
+      <div className="cat-add-media">
+        <div className="cat-cover cat-add-preview">
+          {draft.image_url ? <img src={draft.image_url} alt="" /> : <span>Upload cover</span>}
+          <div className="cat-cover-title"><b>{draft.name || 'New category'}</b><small>{draft.slug || 'category-slug'}</small></div>
+        </div>
+        <div>
+          <label>Upload cover image<input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && uploadDraft(e.target.files[0])} /></label>
+          <label>Cover image URL<input value={draft.image_url} onChange={(e) => setDraft((d) => ({ ...d, image_url: e.target.value }))} placeholder="/products/example.webp or https://..." /></label>
+          <label>Position<input type="number" min={0} value={draft.position} onChange={(e) => setDraft((d) => ({ ...d, position: Number(e.target.value) }))} /></label>
+        </div>
+      </div>
+      <button type="button" className="p" onClick={addCategory} disabled={draft.name.trim().length < 2}>Add category</button> {adding && <span className={adding.includes('added') || adding.includes('ready') || adding.includes('uploaded') ? 'good' : adding.includes('Adding') || adding.includes('Preparing') ? '' : 'bad'}>{adding}</span>}
     </div>
     {items.map((c) => <div className="cat-edit" key={c.id}>
       <div className="cat-cover">
