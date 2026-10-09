@@ -8,6 +8,7 @@ const LINKS = [
   ['Dashboard', '/admin/dashboard'],
   ['Products', '/admin/products'],
   ['Orders', '/admin/orders'],
+  ['Checkout', '/admin/checkout'],
   ['Settings', '/admin/settings'],
   ['View store', '/'],
 ] as const;
