@@ -7,8 +7,9 @@ import { first, run } from '@/lib/db';
 const schema = z.object({
   name: z.string().trim().min(2).max(80),
   description: z.string().trim().max(240).nullable(),
-  image_url: z.string().trim().transform((s) => s && !/^https?:\/\//.test(s) && !s.startsWith('/') ? `/${s}` : s)
-    .refine((s) => s === '' || /^https?:\/\//.test(s) || s.startsWith('/'), 'Use a website URL or a path starting with /.').nullable(),
+  image_url: z.string().trim().max(850000, 'Image is too large. Please use a smaller image.')
+    .transform((s) => s && !/^https?:\/\//.test(s) && !s.startsWith('/') && !/^data:image\//i.test(s) ? `/${s}` : s)
+    .refine((s) => s === '' || /^https?:\/\//.test(s) || s.startsWith('/') || /^data:image\/(png|jpe?g|webp);base64,/i.test(s), 'Use a website URL, uploaded image, or path starting with /.').nullable(),
   position: z.number().int().min(0).max(999),
   is_active: z.boolean(),
 });

@@ -17,21 +17,52 @@ export default function CategoryEditor({ categories }: { categories: Cat[] }) {
   const imageUrl = (value: string) => {
     const v = value.trim();
     if (!v) return null;
-    if (/^https?:\/\//.test(v) || v.startsWith('/')) return v;
+    if (/^https?:\/\//.test(v) || v.startsWith('/') || /^data:image\/(png|jpe?g|webp);base64,/i.test(v)) return v;
     return `/${v}`;
   };
+  const fileToDataUrl = (file: File) => new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Could not read image file.'));
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('Could not load image file.'));
+      img.onload = () => {
+        const max = 1400;
+        const scale = Math.min(1, max / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(img.width * scale));
+        canvas.height = Math.max(1, Math.round(img.height * scale));
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return reject(new Error('Could not prepare image.'));
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/webp', 0.82));
+      };
+      img.src = String(reader.result);
+    };
+    reader.readAsDataURL(file);
+  });
 
   async function upload(id: string, file: File) {
     setUploading((m) => ({ ...m, [id]: 'Uploading...' }));
     try {
       const sigRes = await fetch('/api/admin/upload-signature');
       const sg = await readJson(sigRes);
-      if (!sigRes.ok || sg.error) throw new Error(sg.error || 'Could not start upload. Please login again and retry.');
+      if (!sigRes.ok || sg.error) {
+        const fallback = await fileToDataUrl(file);
+        set(id, 'image_url', fallback);
+        setUploading((m) => ({ ...m, [id]: 'Image ready. Press Save.' }));
+        return;
+      }
       const fd = new FormData();
       fd.append('file', file); fd.append('api_key', sg.apiKey); fd.append('timestamp', sg.timestamp); fd.append('folder', sg.folder); fd.append('signature', sg.signature);
       const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${sg.cloudName}/image/upload`, { method: 'POST', body: fd });
       const res = await readJson(uploadRes);
-      if (!res.secure_url) throw new Error(res.error?.message ?? 'Upload failed');
+      if (!res.secure_url) {
+        const fallback = await fileToDataUrl(file);
+        set(id, 'image_url', fallback);
+        setUploading((m) => ({ ...m, [id]: 'Image ready. Press Save.' }));
+        return;
+      }
       set(id, 'image_url', res.secure_url);
       setUploading((m) => ({ ...m, [id]: 'Uploaded. Press Save.' }));
     } catch (e) {

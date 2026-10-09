@@ -53,7 +53,7 @@ export default async function Home() {
         const imageUrl = c.image_url;
         return (<Link key={c.id} className="cat" href={`/shop?category=${c.slug}`}>
           <span className="big d">{c.name.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
-          {imageUrl && <Image className="cim" src={imageUrl} alt="" width={420} height={560} sizes="40vw" />}
+          {imageUrl && <img className="cim" src={imageUrl} alt="" loading="lazy" />}
           <h3 className="d">{c.name}</h3><p>{c.description}</p><span className="ar">Explore →</span></Link>);
       })}
     </div></div></section>
