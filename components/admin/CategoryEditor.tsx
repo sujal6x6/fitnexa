@@ -91,7 +91,10 @@ export default function CategoryEditor({ categories }: { categories: Cat[] }) {
 
   return <div className="cat-editor">
     {items.map((c) => <div className="cat-edit" key={c.id}>
-      <div className="cat-cover">{c.image_url ? <img src={c.image_url} alt="" /> : <span>No cover</span>}</div>
+      <div className="cat-cover">
+        {c.image_url ? <img src={c.image_url} alt="" /> : <span>No cover</span>}
+        <div className="cat-cover-title"><b>{c.name}</b><small>{c.slug}</small></div>
+      </div>
       <div className="cat-fields">
         <div className="g2"><label>Name<input value={c.name} onChange={(e) => set(c.id, 'name', e.target.value)} /></label><label>Slug<input value={c.slug} readOnly /></label></div>
         <label>Description<input value={c.description} onChange={(e) => set(c.id, 'description', e.target.value)} /></label>
