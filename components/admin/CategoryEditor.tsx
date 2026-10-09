@@ -3,10 +3,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 type Cat = { id: string; name: string; slug: string; description: string | null; image_url: string | null; position: number; is_active: number | boolean };
+const slugify = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 export default function CategoryEditor({ categories }: { categories: Cat[] }) {
   const router = useRouter();
   const [items, setItems] = useState(() => categories.map((c) => ({ ...c, is_active: !!c.is_active, image_url: c.image_url ?? '', description: c.description ?? '' })));
+  const [draft, setDraft] = useState({ name: '', slug: '', description: '', image_url: '', position: 99 });
+  const [adding, setAdding] = useState('');
   const [msg, setMsg] = useState<Record<string, string>>({});
   const [uploading, setUploading] = useState<Record<string, string>>({});
   const set = (id: string, key: string, value: unknown) => setItems((prev) => prev.map((c) => c.id === id ? { ...c, [key]: value } : c));
@@ -88,8 +91,34 @@ export default function CategoryEditor({ categories }: { categories: Cat[] }) {
       setMsg((m) => ({ ...m, [c.id]: (e as Error).message }));
     }
   }
+  async function addCategory() {
+    setAdding('Adding...');
+    try {
+      const r = await fetch('/api/admin/categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...draft, slug: draft.slug || slugify(draft.name), image_url: imageUrl(draft.image_url), position: Number(draft.position) || 99 }),
+      });
+      const d = await readJson(r);
+      const details = d.details ? Object.values(d.details).flat().filter(Boolean).join(' ') : '';
+      if (!r.ok) throw new Error(details || d.error || 'Could not add category.');
+      setItems((prev) => [...prev, { ...d.category, is_active: !!d.category.is_active, image_url: d.category.image_url ?? '', description: d.category.description ?? '' }]);
+      setDraft({ name: '', slug: '', description: '', image_url: '', position: 99 });
+      setAdding('Category added.');
+      router.refresh();
+    } catch (e) {
+      setAdding((e as Error).message);
+    }
+  }
 
   return <div className="cat-editor">
+    <div className="cat-add panel">
+      <h2>Add category</h2>
+      <div className="g2"><label>Name<input value={draft.name} onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value, slug: d.slug || slugify(e.target.value) }))} /></label><label>Slug<input value={draft.slug} onChange={(e) => setDraft((d) => ({ ...d, slug: slugify(e.target.value) }))} /></label></div>
+      <label>Description<input value={draft.description} onChange={(e) => setDraft((d) => ({ ...d, description: e.target.value }))} /></label>
+      <div className="g2"><label>Cover image URL<input value={draft.image_url} onChange={(e) => setDraft((d) => ({ ...d, image_url: e.target.value }))} placeholder="/products/example.webp or https://..." /></label><label>Position<input type="number" min={0} value={draft.position} onChange={(e) => setDraft((d) => ({ ...d, position: Number(e.target.value) }))} /></label></div>
+      <button type="button" className="p" onClick={addCategory} disabled={draft.name.trim().length < 2}>Add category</button> {adding && <span className={adding.includes('added') ? 'good' : adding.includes('Adding') ? '' : 'bad'}>{adding}</span>}
+    </div>
     {items.map((c) => <div className="cat-edit" key={c.id}>
       <div className="cat-cover">
         {c.image_url ? <img src={c.image_url} alt="" /> : <span>No cover</span>}

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
 import { getCategories, getProducts } from '@/lib/queries';
@@ -14,8 +15,13 @@ const WHY: [string, string][] = [['Premium quality', 'Equipment selected and che
 export default async function Home() {
   const [cats, products, S] = await Promise.all([getCategories(), getProducts({ featured: true }), getSettings()]);
   const c = S.content, ct = S.contact;
+  const heroStyle = {
+    '--hero-bg': `url("${String(c.hero_image_url || '/brand/hero-showroom-bg.png').replace(/"/g, '\\"')}")`,
+    '--hero-bg-size': c.hero_image_fit === 'contain' ? 'contain' : 'cover',
+    '--hero-bg-position': c.hero_image_position || 'center center',
+  } as CSSProperties;
   return (<>
-    <header className="hero poster-hero" id="top"><div className="grid" /><div className="slash" />
+    <header className="hero poster-hero" id="top" style={heroStyle}><div className="grid" /><div className="slash" />
       <div className="hero-glow" aria-hidden="true" />
       <div className="wrap hero-poster">
         <div className="hero-copy">

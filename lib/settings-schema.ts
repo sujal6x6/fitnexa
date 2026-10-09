@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { PAGES } from './pages';
 
-export type FieldType = 'text' | 'textarea' | 'email' | 'url' | 'rupees' | 'number' | 'lines';
+export type FieldType = 'text' | 'textarea' | 'email' | 'url' | 'rupees' | 'number' | 'lines' | 'boolean';
 export type Field = { key: string; label: string; type: FieldType; help?: string; wide?: boolean };
 export type Group = { id: string; tab: 'general' | 'seo' | 'home' | 'pages' | 'shop' | 'email'; title: string; note?: string; fields: Field[] };
 const t = (key: string, label: string, help?: string): Field => ({ key, label, type: 'text', help });
@@ -24,13 +24,20 @@ export const GROUPS: Group[] = [
     t('locality', 'Business locality / city'), t('region', 'Business state / region'), t('country', 'Business country code', 'Example: IN')] },
   { id: 'content', tab: 'home', title: 'Homepage content', fields: [
     t('hero_line1', 'Hero headline — line 1'), t('hero_line2', 'Hero headline — line 2 (shown in red)'), t('hero_line3', 'Hero headline — line 3'), ta('hero_text', 'Hero supporting text'),
+    { key: 'hero_image_url', label: 'Hero background image URL', type: 'url', help: 'Upload or paste an image. The site blends it with the dark/red hero background automatically.', wide: true },
+    t('hero_image_fit', 'Hero image fit', 'Use cover for full background, contain for full image.'), t('hero_image_position', 'Hero image position', 'Example: center center, center top, 70% center.'),
     t('hero_cta', 'Primary button label'), t('hero_cta2', 'Secondary button label'),
     { key: 'trust_items', label: 'Trust strip items (one per line)', type: 'lines', wide: true },
     t('homegym_title', 'Multi Home Gym section — title'), ta('homegym_text', 'Multi Home Gym section — text'), { key: 'homegym_points', label: 'Multi Home Gym highlights (one per line)', type: 'lines', wide: true },
     t('cta_title', 'Bottom call-to-action title')] },
   ...Object.keys(PAGES).map((slug): Group => ({ id: pageGroupId(slug), tab: 'pages', title: PAGE_LABELS[slug], note: 'Separate paragraphs with a blank line.', fields: [t('title', 'Page title'), ta('body', 'Page text'), t('seo_title', 'SEO title (optional)'), ta('seo_description', 'SEO description (optional)')] })),
   { id: 'shipping', tab: 'shop', title: 'Shipping', note: 'Applied automatically at cart and checkout.', fields: [{ key: 'flat_paise', label: 'Flat delivery charge (₹)', type: 'rupees', help: '0 = free delivery' }, { key: 'free_above_paise', label: 'Free delivery above (₹)', type: 'rupees', help: '0 = no free-delivery threshold' }] },
-  { id: 'orders', tab: 'shop', title: 'Orders & stock', fields: [{ key: 'low_stock_threshold', label: 'Low-stock warning at or below', type: 'number' }] },
+  { id: 'orders', tab: 'shop', title: 'Orders & checkout process', fields: [
+    { key: 'low_stock_threshold', label: 'Low-stock warning at or below', type: 'number' },
+    { key: 'enable_whatsapp_pay', label: 'Enable Pay directly on WhatsApp', type: 'boolean', help: 'Customer places order, then opens WhatsApp with order details.' },
+    { key: 'enable_cod', label: 'Enable Cash on Delivery (COD)', type: 'boolean' },
+    { key: 'enable_razorpay', label: 'Enable online UPI/card payment via Razorpay', type: 'boolean' },
+  ] },
   { id: 'email', tab: 'email', title: 'Email', note: 'Stored for when order emails are added. SMTP / email-API keys are secrets and belong in environment variables, not here.', fields: [t('from_name', 'Sender name'), { key: 'from_email', label: 'Sender email', type: 'email' }, { key: 'notify_email', label: 'Send new-order alerts to', type: 'email' }] },
 ];
 
@@ -40,11 +47,12 @@ export const DEFAULTS: Record<string, Record<string, any>> = {
     address: 'Ground Floor, 257, MS Villa, Gali No. 1, Near Central Bank of India, Ashok Nagar, Yashoda Nagar, Etawah, Uttar Pradesh – 206001, India.', gstin: '09ACYPP8061A2Z4', instagram: 'https://www.instagram.com/kesari_fitzone/', facebook: '', youtube: '' },
   seo: { title_default: 'FITNEXA — Har Ghar Fitness', title_template: '%s | FITNEXA', description: 'Premium-quality home fitness equipment at reasonable prices. Air bikes, orbit bikes, adjustable benches and multi home gyms. Delivered across India.',
     keywords: 'home gym, air bike, exercise bike, adjustable bench, treadmill, fitness equipment India', og_image: '/brand/logo.webp', google_verification: 'ouSZTUH5me9AJ_XFIkLoD9UbtdDvEOlIbU3DYwIlgCE', twitter_handle: '', locality: 'Etawah', region: 'Uttar Pradesh', country: 'IN' },
-  content: { hero_line1: 'Fitness', hero_line2: 'for every', hero_line3: 'home.', hero_text: 'Premium fitness equipment designed for your home. Built for strength. Designed for everyday fitness.', hero_cta: 'SHOP EQUIPMENT', hero_cta2: 'EXPLORE FITNEXA',
+  content: { hero_line1: 'Fitness', hero_line2: 'for every', hero_line3: 'home.', hero_text: 'Premium fitness equipment designed for your home. Built for strength. Designed for everyday fitness.',
+    hero_image_url: '/brand/hero-showroom-bg.png', hero_image_fit: 'cover', hero_image_position: 'center center', hero_cta: 'SHOP EQUIPMENT', hero_cta2: 'EXPLORE FITNEXA',
     trust_items: ['Premium quality', 'Reasonable prices', 'Home fitness', 'Free Pan-India delivery', 'Customer support', 'After-sales service'],
     homegym_title: 'Your complete home gym', homegym_text: 'Bring a complete fitness setup into your home.', homegym_points: ['Multiple workouts, one machine', 'Made for domestic, everyday use', 'Free video-call installation help', 'Pan-India delivery'], cta_title: 'Ready to build your home gym?' },
   shipping: { flat_paise: 0, free_above_paise: 0 },
-  orders: { low_stock_threshold: 5 },
+  orders: { low_stock_threshold: 5, enable_whatsapp_pay: true, enable_cod: false, enable_razorpay: true },
   email: { from_name: 'FITNEXA', from_email: '', notify_email: '' },
   ...Object.fromEntries(Object.entries(PAGES).map(([slug, p]) => [pageGroupId(slug), { title: p.title, body: p.body.join('\n\n'), seo_title: '', seo_description: '' }])),
 };
@@ -53,10 +61,11 @@ export const DEFAULTS: Record<string, Record<string, any>> = {
 export function groupSchema(g: Group) {
   const shape: Record<string, z.ZodTypeAny> = {};
   for (const f of g.fields) {
-    shape[f.key] = f.type === 'number' || f.type === 'rupees' ? z.number().int().min(0).max(100_000_000)
+    shape[f.key] = f.type === 'boolean' ? z.boolean()
+      : f.type === 'number' || f.type === 'rupees' ? z.number().int().min(0).max(100_000_000)
       : f.type === 'lines' ? z.array(z.string().trim().max(200)).max(20)
       : f.type === 'email' ? z.string().trim().email('Enter a valid email').or(z.literal(''))
-      : f.type === 'url' ? z.string().trim().refine((v) => v === '' || /^https?:\/\//.test(v) || v.startsWith('/'), `${f.label}: must start with http(s):// or /`)
+      : f.type === 'url' ? z.string().trim().max(850000, `${f.label}: image is too large`).refine((v) => v === '' || /^https?:\/\//.test(v) || v.startsWith('/') || /^data:image\/(png|jpe?g|webp);base64,/i.test(v), `${f.label}: must be an uploaded image, http(s):// URL, or / path`)
       : z.string().max(f.type === 'textarea' ? 20000 : 300);
   }
   return z.object(shape).strict();
