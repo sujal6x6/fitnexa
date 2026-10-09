@@ -10,15 +10,27 @@ export default function CategoryEditor({ categories }: { categories: Cat[] }) {
   const [msg, setMsg] = useState<Record<string, string>>({});
   const [uploading, setUploading] = useState<Record<string, string>>({});
   const set = (id: string, key: string, value: unknown) => setItems((prev) => prev.map((c) => c.id === id ? { ...c, [key]: value } : c));
+  const readJson = async (res: Response) => {
+    const text = await res.text();
+    try { return text ? JSON.parse(text) : {}; } catch { return { error: text || res.statusText }; }
+  };
+  const imageUrl = (value: string) => {
+    const v = value.trim();
+    if (!v) return null;
+    if (/^https?:\/\//.test(v) || v.startsWith('/')) return v;
+    return `/${v}`;
+  };
 
   async function upload(id: string, file: File) {
     setUploading((m) => ({ ...m, [id]: 'Uploading...' }));
     try {
-      const sg = await fetch('/api/admin/upload-signature').then((x) => x.json());
-      if (sg.error) throw new Error(sg.error);
+      const sigRes = await fetch('/api/admin/upload-signature');
+      const sg = await readJson(sigRes);
+      if (!sigRes.ok || sg.error) throw new Error(sg.error || 'Could not start upload. Please login again and retry.');
       const fd = new FormData();
       fd.append('file', file); fd.append('api_key', sg.apiKey); fd.append('timestamp', sg.timestamp); fd.append('folder', sg.folder); fd.append('signature', sg.signature);
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${sg.cloudName}/image/upload`, { method: 'POST', body: fd }).then((x) => x.json());
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${sg.cloudName}/image/upload`, { method: 'POST', body: fd });
+      const res = await readJson(uploadRes);
       if (!res.secure_url) throw new Error(res.error?.message ?? 'Upload failed');
       set(id, 'image_url', res.secure_url);
       setUploading((m) => ({ ...m, [id]: 'Uploaded. Press Save.' }));
@@ -29,14 +41,21 @@ export default function CategoryEditor({ categories }: { categories: Cat[] }) {
 
   async function save(c: (typeof items)[number]) {
     setMsg((m) => ({ ...m, [c.id]: 'Saving...' }));
-    const r = await fetch(`/api/admin/categories/${c.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: c.name, description: c.description || null, image_url: c.image_url || null, position: Number(c.position) || 0, is_active: !!c.is_active }),
-    });
-    const d = await r.json();
-    setMsg((m) => ({ ...m, [c.id]: r.ok ? 'Saved. Live on store.' : (d.details ? Object.values(d.details).flat().join(' ') : d.error) }));
-    if (r.ok) router.refresh();
+    try {
+      const r = await fetch(`/api/admin/categories/${c.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: c.name.trim(), description: c.description.trim() || null, image_url: imageUrl(c.image_url), position: Number(c.position) || 0, is_active: !!c.is_active }),
+      });
+      const d = await readJson(r);
+      const details = d.details ? Object.values(d.details).flat().filter(Boolean).join(' ') : '';
+      if (!r.ok) throw new Error(details || d.error || 'Could not save category.');
+      set(c.id, 'image_url', d.category?.image_url ?? imageUrl(c.image_url) ?? '');
+      setMsg((m) => ({ ...m, [c.id]: 'Saved. Live on store.' }));
+      router.refresh();
+    } catch (e) {
+      setMsg((m) => ({ ...m, [c.id]: (e as Error).message }));
+    }
   }
 
   return <div className="cat-editor">

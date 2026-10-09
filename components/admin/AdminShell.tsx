@@ -15,17 +15,19 @@ const LINKS = [
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const [open, setOpen] = useState(false);
-  const nav = (
-    <aside className={open ? 'open' : ''}>
-      <div className="brand">FIT<i>N</i>EXA <small>admin</small></div>
+  const links = (
+    <div className="admin-menu-links">
       {LINKS.map(([label, href]) => <Link key={href} href={href} target={href === '/' ? '_blank' : undefined} className={path.startsWith(href) && href !== '/' ? 'active' : ''} onClick={() => setOpen(false)}>{label}</Link>)}
       <LogoutButton />
-    </aside>
+    </div>
   );
   return <div className="adm">
-    <header className="admin-mobile-head"><div className="brand">FIT<i>N</i>EXA <small>admin</small></div><button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open}>Menu</button></header>
-    {nav}
-    {open && <button type="button" aria-label="Close menu" className="admin-scrim" onClick={() => setOpen(false)} />}
+    <header className="admin-head">
+      <Link className="brand" href="/admin/dashboard">FIT<i>N</i>EXA <small>admin</small></Link>
+      <nav className="admin-menu">{links}</nav>
+      <button className="admin-menu-btn" type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open}>Menu</button>
+    </header>
+    {open && <div className="admin-menu-panel">{links}</div>}
     <main>{children}</main>
   </div>;
 }
