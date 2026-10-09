@@ -3,12 +3,14 @@ import { useState } from 'react';
 import type { Group, Field } from '@/lib/settings-schema';
 import type { PayStatus } from '@/lib/payment-config';
 import PaymentEditor from './PaymentEditor';
+import CategoryEditor from './CategoryEditor';
 
-const TABS = [['general', 'Brand & contact'], ['seo', 'SEO'], ['home', 'Homepage'], ['pages', 'Pages & policies'], ['shop', 'Shipping & orders'], ['email', 'Email'], ['pay', 'Payments']] as const;
-const SITE_URL = 'https://fitnexa.sujaljangra69.workers.dev';
+const TABS = [['general', 'Brand & contact'], ['seo', 'SEO'], ['home', 'Homepage'], ['categories', 'Categories'], ['pages', 'Pages & policies'], ['shop', 'Shipping & orders'], ['email', 'Email'], ['pay', 'Payments']] as const;
+const SITE_URL = 'https://fitnexafitness.com';
 const toDisplay = (f: Field, v: any) => f.type === 'rupees' ? String((v ?? 0) / 100) : f.type === 'lines' ? (v ?? []).join('\n') : String(v ?? '');
+type Cat = { id: string; name: string; slug: string; description: string | null; image_url: string | null; position: number; is_active: number | boolean };
 
-export default function SettingsEditor({ groups, values, pay }: { groups: Group[]; values: Record<string, any>; pay: PayStatus }) {
+export default function SettingsEditor({ groups, values, pay, categories }: { groups: Group[]; values: Record<string, any>; pay: PayStatus; categories: Cat[] }) {
   const [tab, setTab] = useState<string>('general');
   const [page, setPage] = useState(groups.find((g) => g.tab === 'pages')!.id);
   const [vals, setVals] = useState<Record<string, Record<string, string>>>(() => Object.fromEntries(groups.map((g) => [g.id, Object.fromEntries(g.fields.map((f) => [f.key, toDisplay(f, values[g.id]?.[f.key])]))])));
@@ -44,5 +46,6 @@ export default function SettingsEditor({ groups, values, pay }: { groups: Group[
     <div className="admin-tabs">{TABS.map(([id, l]) => <button key={id} className={tab === id ? 'p' : 's'} onClick={() => setTab(id)}>{l}</button>)}</div>
     {tab === 'pages' ? <><label style={{ maxWidth: 360 }}>Page to edit<select value={page} onChange={(e) => setPage(e.target.value)}>{pg.map((g) => <option key={g.id} value={g.id}>{g.title}</option>)}</select></label>{panel(pg.find((g) => g.id === page)!)}</>
       : tab === 'pay' ? <PaymentEditor status={pay} />
+      : tab === 'categories' ? <CategoryEditor categories={categories} />
       : groups.filter((g) => g.tab === tab).map(panel)}</>);
 }

@@ -50,7 +50,7 @@ export default async function Home() {
 
     <section id="cats"><div className="wrap"><h2 className="d">Shop by category</h2><div className="cats">
       {cats.map((c) => {
-        const imageUrl = c.slug === 'treadmills' ? '/products/treadmill-category-cover.png' : c.image_url;
+        const imageUrl = c.image_url;
         return (<Link key={c.id} className="cat" href={`/shop?category=${c.slug}`}>
           <span className="big d">{c.name.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
           {imageUrl && <Image className="cim" src={imageUrl} alt="" width={420} height={560} sizes="40vw" />}
