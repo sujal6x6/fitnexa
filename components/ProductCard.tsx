@@ -8,7 +8,7 @@ import type { Product } from '@/lib/queries';
 export default function ProductCard({ p }: { p: Product }) {
   const { add } = useCart(); const [done, setDone] = useState(false);
   const img = p.images[0]; const off = p.compare_price_paise && p.compare_price_paise > p.price_paise ? Math.round(100 - (p.price_paise / p.compare_price_paise) * 100) : 0;
-  const fit = p.category?.slug === 'treadmills' ? 'contain' : 'cover';
+  const fit = p.category?.slug === 'treadmills' || p.category?.slug === 'combo' ? 'contain' : 'cover';
   return (
     <article className="pc">
       {off > 0 ? <span className="tag">{off}% OFF</span> : p.category && <span className="tag">{p.category.name}</span>}
